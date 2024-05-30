@@ -1,6 +1,10 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
 
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="{{route('article.index')}}">Tutti gli articoli</a>
+    </li>    
+
         <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{route('hompage')}}">Aulab Post</a>
         </li>    
