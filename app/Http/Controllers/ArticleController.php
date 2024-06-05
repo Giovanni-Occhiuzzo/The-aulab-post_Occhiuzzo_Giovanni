@@ -104,4 +104,11 @@ class ArticleController extends Controller
         $articles = $redattore->articles()->where('is_accepted', true)->orderBy('created_at', 'desc')->get();
         return view('article.byRedattore', compact('redattore', 'articles'));
     }
+
+    public function articleSearch(Request $request){
+        $query = $request->input('query');
+        $articles = Article::search($query)->where('is_accepted', true)->orderBy('created_at', 'desc')->get();
+
+        return view('article.search-index', compact('articles', 'query'));
+    }
 }

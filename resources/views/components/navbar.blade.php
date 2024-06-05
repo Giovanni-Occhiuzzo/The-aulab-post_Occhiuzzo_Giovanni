@@ -15,6 +15,10 @@
              <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{{route('careers')}}">Lavora con noi</a>
              </li>
+             <form action="{{route('article.search')}}" method="GET" class="d-flex" role="search">
+              <input class="form-control me-2" type="search" name="query" placeholder="Cerca tra gli articoli..." aria-label="Search">
+              <button class="btn btn-outline-secondary" type="submit">Cerca</button>
+            </form>
           
           @auth
           @if (Auth::user()->is_admin)
