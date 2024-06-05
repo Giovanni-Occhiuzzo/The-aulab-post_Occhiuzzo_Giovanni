@@ -21,8 +21,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::orderBy('created_at', 'desc')->get();
-        return view('aticle.index', compact('articles'));
+        $articles = Article::where('is_accepted', true)->orderBy('created_at', 'desc')->get();
+        return view('article.index', compact('articles'));
     }
 
     /**
@@ -90,8 +90,13 @@ class ArticleController extends Controller
     }
 
     public function byCategory(Category $category){
-        $articles = $category->articles()->orderBy('created_at', 'desc')->get();
-        return view('article.by-category', compact('category', 'articles'));
+        $articles = $category->articles()->where('is_accepted', true)->orderBy('created_at', 'desc')->get();
+        return view('article.byCategory', compact('category', 'articles'));
+    }
+
+    public function byUser(User $user){
+        $articles = $user->articles()->where('is_accepted', true)->orderBy('created_at', 'desc')->get();
+        return view('article.by-user', compact('user', 'articles'));
     }
 
     public function byRedattore(User $redattore)
