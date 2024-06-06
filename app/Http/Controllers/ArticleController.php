@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\User;
 use App\Models\Article;
 use App\Models\Category;
@@ -14,7 +15,7 @@ class ArticleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('index' , 'show');
+        $this->middleware('auth')->except('index' , 'show', 'byCategory', 'byUser', 'articleSearch');
     }
     /**
      * Display a listing of the resource.
@@ -40,10 +41,11 @@ class ArticleController extends Controller
     {
         $request->validate([
             'title' => 'required｜unique:articles｜min:5',
-            'subtisle' => 'required｜min:5',
+            'subtitle' => 'required｜min:5',
             'body' => 'required｜min:10',
             'image' => 'required｜image',
             'category' => 'required',
+            'tags' => 'required',
         ]);
 
         $article = Article::create([
@@ -54,6 +56,20 @@ class ArticleController extends Controller
             'category_id' => $request->category,
             'user_id' => Auth::user()->id,
         ]);
+        return redirect(route('hompage'))->with('message', 'Articolo creato con successo');
+
+        $tags = explode(',', $request->tags);
+
+        foreach($tags as $i => $tag){
+            $tags[$i] = trim($tag);
+        }
+
+        foreach($tags as $tag){
+            $newTag = Tag::updateOrCreate([
+                'name' => strtolower($tag)
+            ]);
+            $article->tags()->attach($newTag);
+        }
         return redirect(route('hompage'))->with('message', 'Articolo creato con successo');
     }
 

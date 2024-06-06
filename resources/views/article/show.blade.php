@@ -12,8 +12,17 @@
                 <img src="{{Storage::url($article->image)}}" class="img-fluid" alt="Immagine dell'articolo: {{$article->title}}">
                 <div class="text-center">
                     <h2>{{$article->subtitle}}</h2>
-                    <p class="fs-5">Categoria:
-                        <a href="{{route('article.byCategory', $article->category)}}" class="text-capitalize fw-bold text-muted">{{$article->category->name}}</a>
+                    @if ($article->category)
+                    <p class="small text-muted">Categoria:
+                        <a href="{{route('article.byCategory', $article->category)}}" class="text-capitalize text-muted">{{$article->category->name}}</a>
+                    </p>
+                    @else
+                    <p class="small text-muted">Nessuna categoria</p>
+                @endif
+                    <p class="small text-muted my-0">
+                        @foreach ($article->tags as $tag)
+                            #{{ $tag->name }}
+                        @endforeach
                     </p>
                     <div class="text-muted my-3">
                         <p>Redatto il {{$article->created_at->format('d/m/Y')}} da <a  class="text-muted fst-italic text-capitalize"
