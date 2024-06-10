@@ -27,6 +27,9 @@
           @if (Auth::user()->is_revisor)
             <li><a class="dropdown-item" href="{{route('revisor.dashboard')}}">Dashboard Revisor</a></li>
           @endif
+          @if (Auth::user()->is_writer)
+            <li class="p-2"><a class="dropdown-item" href="{{route('writer.dashboard')}}">Dashboard Writer</a></li>
+          @endif
           <li class="nav-item">
             <a class="nav-link" href="{{route('article.create')}}">Inserisci un articolo</a>
           </li>
